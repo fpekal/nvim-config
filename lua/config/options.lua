@@ -6,6 +6,7 @@ vim.opt.mouse = ""
 vim.opt.spelllang = {}
 vim.opt.wrap = true
 vim.opt.expandtab = false
+vim.opt.scrolloff = 7
 
 vim.g.root_spec = { { ".git", "lua", ".jj", "pack.mcmeta" }, "cwd" }
 
