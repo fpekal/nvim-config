@@ -1,6 +1,10 @@
 return {
 	{
 		"olimorris/codecompanion.nvim",
+		keys = {
+			{ "<leader>aa", "<cmd>CodeCompanion<cr>", mode = { "n", "v" }, desc = "Show CodeCompanion prompt" },
+			{ "<leader>ac", "<cmd>CodeCompanionChat<cr>", desc = "Show CodeCompanion chat" },
+		},
 		config = function()
 			require("codecompanion").setup({
 				adapters = {
