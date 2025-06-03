@@ -1,3 +1,15 @@
+local function get_api_key()
+	local f = io.open("codecompanion.key", "r")
+
+	if f == nil then
+		return ""
+	end
+
+	local content = f:read("*a")
+	f:close()
+	return content
+end
+
 return {
 	{
 		"olimorris/codecompanion.nvim",
@@ -14,7 +26,7 @@ return {
 						return require("codecompanion.adapters").extend("openai", {
 							url = "https://glama.ai/api/gateway/openai/v1/chat/completions",
 							env = {
-								api_key = "[REDACTED]",
+								api_key = get_api_key(),
 							},
 							schema = {
 								model = {
