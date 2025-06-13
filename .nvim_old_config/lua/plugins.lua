@@ -1,17 +1,15 @@
 return require("packer").startup(function(use)
-	use {
-		'nvim-treesitter/nvim-treesitter',
-		run = ':TSUpdate'
-	}
-	use { "nvim-telescope/telescope.nvim",
-		requires = {
-			{'nvim-lua/plenary.nvim'},
-		}
-	}
-	use "vigoux/oak"
-	use { "catppuccin/nvim", as = "catppuccin" }
-	use "nvim-tree/nvim-web-devicons"
-	use "famiu/feline.nvim"
+	use({
+		"nvim-treesitter/nvim-treesitter",
+		run = ":TSUpdate",
+	})
+	use({ "nvim-telescope/telescope.nvim", requires = {
+		{ "nvim-lua/plenary.nvim" },
+	} })
+	use("vigoux/oak")
+	use({ "catppuccin/nvim", as = "catppuccin" })
+	use("nvim-tree/nvim-web-devicons")
+	use("famiu/feline.nvim")
 	--use {
 	--	'Exafunction/codeium.vim',
 	--	config = function ()
@@ -22,28 +20,28 @@ return require("packer").startup(function(use)
 	--		vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
 	--	end
 	--}
-	
+
 	use({
-	  "olimorris/codecompanion.nvim",
-	  config = function()
-	    require("codecompanion").setup({
+		"olimorris/codecompanion.nvim",
+		config = function()
+			require("codecompanion").setup({
 				adapters = {
 					glama = function()
 						return require("codecompanion.adapters").extend("openai", {
 							url = "https://glama.ai/api/gateway/openai/v1/chat/completions",
 							env = {
-								api_key = "glama_eyJhcGlLZXkiOiI2OGVlMjMzZC1hYTAyLTRhZmMtYTRjNS1iNzlkM2I4MzMxNmMifQ",
+								api_key = "[REDACTED]",
 							},
 							schema = {
 								model = {
 									default = "gemini-2.0-pro-exp-02-05",
 								},
 								stop = {
-									default = {"STOP", "stop"},
+									default = { "STOP", "stop" },
 								},
 							},
 						})
-					end
+					end,
 				},
 				strategies = {
 					-- Change the default chat adapter
@@ -56,15 +54,15 @@ return require("packer").startup(function(use)
 					cmd = {
 						adapter = "glama",
 					},
-				}
+				},
 			})
-	  end,
-	  requires = {
-	    "nvim-lua/plenary.nvim",
-	    "nvim-treesitter/nvim-treesitter",
-	  }
+		end,
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
 	})
 
-	use "Julian/lean.nvim"
-	use "neovim/nvim-lspconfig"
+	use("Julian/lean.nvim")
+	use("neovim/nvim-lspconfig")
 end)
