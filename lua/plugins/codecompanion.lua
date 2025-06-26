@@ -1,5 +1,5 @@
 local function get_api_key()
-	local f = io.open("codecompanion.key", "r")
+	local f = io.open("~/.secrets/nvim-codecompanion.key", "r")
 
 	if f == nil then
 		return ""
