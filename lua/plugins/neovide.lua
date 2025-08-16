@@ -15,4 +15,7 @@ vim.keymap.set("n", "<C-->", function()
 	change_scale(-0.1)
 end)
 
+-- In terminal mode, map Ctrl+Shift+V to paste system clipboard
+vim.keymap.set("t", "<C-S-v>", [[<C-\><C-n>"+pa]], { noremap = true })
+
 return {}
