@@ -1,5 +1,5 @@
 local function get_api_key()
-	local f = io.open("~/.secrets/nvim-codecompanion.key", "r")
+	local f = io.open("/home/filip/.secrets/nvim-codecompanion.key", "r")
 
 	if f == nil then
 		return ""
@@ -7,6 +7,7 @@ local function get_api_key()
 
 	local content = f:read("*a")
 	f:close()
+	content = content:gsub("%s+$", "")
 	return content
 end
 
@@ -20,101 +21,120 @@ return {
 		config = function()
 			require("codecompanion").setup({
 				adapters = {
+					glama_gemini = function()
+						return require("codecompanion.adapters").extend("openai_compatible", {
+							formatted_name = "glama gemini",
+							env = {
+								url = "https://glama.ai/api/gateway/openai",
+								api_key = get_api_key(),
+								chat_url = "/v1/chat/completions",
+							},
+							headers = {
+								["Content-Type"] = "application/json",
+								Authorization = "Bearer ${api_key}",
+							},
+							schema = {
+								model = {
+									default = "gemini-2.0-flash-thinking",
+								},
+							},
+						})
+					end,
 					gemini = function()
 						local utils = require("codecompanion.utils.adapters")
 
 						return require("codecompanion.adapters").extend("openai", {
-							url = "https://glama.ai/api/gateway/openai/v1/chat/completions",
+							url = "",
 							env = {
 								api_key = get_api_key(),
 							},
 							schema = {
 								model = {
-									default = "gpt-4.1-nano-2025-04-14",
+									default = "gemini-2.0-flash-thinking",
 								},
 								stop = {
 									default = "stop",
 								},
 							},
-							handlers = {
-								chat_output = function(self, data)
-									local output = {}
+							-- handlers = {
+							-- 	chat_output = function(self, data)
+							-- 		local output = {}
 
-									if data and data ~= "" then
-										local data_mod = utils.clean_streamed_data(data)
-										local ok, json = pcall(vim.json.decode, data_mod, { luanil = { object = true } })
+							-- 		if data and data ~= "" then
+							-- 			local data_mod = utils.clean_streamed_data(data)
+							-- 			local ok, json = pcall(vim.json.decode, data_mod, { luanil = { object = true } })
 
-										if ok and json.choices and #json.choices > 0 then
-											local choice = json.choices[1]
+							-- 			if ok and json.choices and #json.choices > 0 then
+							-- 				local choice = json.choices[1]
 
-											if choice.finish_reason then
-												local reason = choice.finish_reason
-												if reason ~= "stop" and reason ~= "STOP" and reason ~= "" then
-													return {
-														status = "error",
-														output = "The stream was stopped with the a finish_reason of '" .. reason .. "'",
-													}
-												end
-											end
+							-- 				if choice.finish_reason then
+							-- 					local reason = choice.finish_reason
+							-- 					if reason ~= "stop" and reason ~= "STOP" and reason ~= "" then
+							-- 						return {
+							-- 							status = "error",
+							-- 							output = "The stream was stopped with the a finish_reason of '" .. reason .. "'",
+							-- 						}
+							-- 					end
+							-- 				end
 
-											local delta = (self.opts and self.opts.stream) and choice.delta or choice.message
+							-- 				local delta = (self.opts and self.opts.stream) and choice.delta or choice.message
 
-											if delta then
-												if delta.role then
-													output.role = delta.role
-												else
-													output.role = nil
-												end
+							-- 				if delta then
+							-- 					if delta.role then
+							-- 						output.role = delta.role
+							-- 					else
+							-- 						output.role = nil
+							-- 					end
 
-												-- Some providers may return empty content
-												if delta.content then
-													output.content = delta.content
-												else
-													output.content = ""
-												end
+							-- 					-- Some providers may return empty content
+							-- 					if delta.content then
+							-- 						output.content = delta.content
+							-- 					else
+							-- 						output.content = ""
+							-- 					end
 
-												return {
-													status = "success",
-													output = output,
-												}
-											end
-										end
-									end
-								end,
-								form_messages = function(self, messages)
-									messages = vim
-										.iter(messages)
-										:map(function(m)
-											local model = self.schema.model.default
-											if type(model) == "function" then
-												model = model()
-											end
-											if m.role == "system" then
-												m.role = self.roles.user
-											end
+							-- 					return {
+							-- 						status = "success",
+							-- 						output = output,
+							-- 					}
+							-- 				end
+							-- 			end
+							-- 		end
+							-- 	end,
+							-- 	form_messages = function(self, messages)
+							-- 		messages = vim
+							-- 			.iter(messages)
+							-- 			:map(function(m)
+							-- 				local model = self.schema.model.default
+							-- 				if type(model) == "function" then
+							-- 					model = model()
+							-- 				end
+							-- 				if m.role == "system" then
+							-- 					m.role = self.roles.user
+							-- 				end
 
-											return {
-												role = m.role,
-												content = m.content,
-											}
-										end)
-										:totable()
+							-- 				return {
+							-- 					role = m.role,
+							-- 					content = m.content,
+							-- 				}
+							-- 			end)
+							-- 			:totable()
 
-									return { messages = messages }
-								end,
-							},
+							-- 		return { messages = messages }
+							-- 	end,
+							-- },
 						})
 					end,
 				},
 				strategies = {
 					chat = {
-						adapter = "gemini",
+						adapter = "glama_gemini",
 					},
 					inline = {
-						adapter = "gemini",
+						adapter = "glama_gemini",
 					},
 					cmd = {
-						adapter = "gemini",
+						adapter = "glama_gemini",
 					},
 				},
 			})
