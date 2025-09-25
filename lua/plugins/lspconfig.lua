@@ -63,6 +63,15 @@ return {
 			-- LSP Server Settings
 			---@type lspconfig.options
 			servers = {
+				nil_ls = {
+					settings = {
+						["nil"] = {
+							formatting = {
+								command = { "alejandra" },
+							},
+						},
+					},
+				},
 				spyglassmc_language_server = {
 					cmd = { "spyglassmc-language-server", "--stdio" },
 					filetypes = { "mcfunction" },
