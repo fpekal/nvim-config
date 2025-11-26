@@ -36,3 +36,9 @@ vim.filetype.add({
 		mcfunction = "mcfunction",
 	},
 })
+
+if vim.g.neovide then
+	vim.g.snacks_animate = false
+else
+	vim.g.snacks_animate = true
+end
