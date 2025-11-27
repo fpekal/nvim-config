@@ -8,4 +8,3 @@ foo.*
 data
 
 lua/plugins/codecompanion.key
-lazy-lock.json
