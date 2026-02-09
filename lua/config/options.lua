@@ -111,3 +111,9 @@ end
 
 vim.cmd([[augroup BcSideline; autocmd!; autocmd CursorHold * lua show_bc(); augroup END]])
 vim.keymap.set("n", "<leader>k", show_hover, { silent = true, noremap = true })
+
+-- :sob: I WAS FORCED TO DO THIS I SWEAR
+vim.opt.shiftwidth = 2
+vim.opt.smarttab = true
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 0
