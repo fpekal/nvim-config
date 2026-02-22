@@ -22,7 +22,7 @@ end
 -- 		},
 -- 	}
 -- end
-vim.opt.clipboard = ""
+vim.g.clipboard = "osc52"
 
 vim.opt.mouse = ""
 vim.opt.spelllang = {}
