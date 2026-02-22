@@ -21,25 +21,27 @@ return {
 		config = function()
 			require("codecompanion").setup({
 				adapters = {
-					glama_gpt = function()
-						return require("codecompanion.adapters").extend("openai_compatible", {
-							formatted_name = "glama gpt",
-							env = {
-								url = "https://glama.ai/api/gateway/openai",
-								api_key = get_api_key(),
-								chat_url = "/v1/chat/completions",
-							},
-							headers = {
-								["Content-Type"] = "application/json",
-								Authorization = "Bearer ${api_key}",
-							},
-							schema = {
-								model = {
-									default = "gpt-5-mini",
+					http = {
+						glama_gpt = function()
+							return require("codecompanion.adapters").extend("openai_compatible", {
+								formatted_name = "glama gpt",
+								env = {
+									url = "https://glama.ai/api/gateway/openai",
+									api_key = get_api_key(),
+									chat_url = "/v1/chat/completions",
 								},
-							},
-						})
-					end,
+								headers = {
+									["Content-Type"] = "application/json",
+									Authorization = "Bearer ${api_key}",
+								},
+								schema = {
+									model = {
+										default = "gpt-5-mini",
+									},
+								},
+							})
+						end,
+					},
 				},
 				strategies = {
 					chat = {
