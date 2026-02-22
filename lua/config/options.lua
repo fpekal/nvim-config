@@ -9,19 +9,20 @@ local function paste()
 	}
 end
 
-if not vim.g.neovide then
-	vim.g.clipboard = {
-		name = "OSC 52",
-		copy = {
-			["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-			["*"] = require("vim.ui.clipboard.osc52").copy("*"),
-		},
-		paste = {
-			["+"] = paste,
-			["*"] = paste,
-		},
-	}
-end
+-- if not vim.g.neovide then
+-- 	vim.g.clipboard = {
+-- 		name = "OSC 52",
+-- 		copy = {
+-- 			["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+-- 			["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+-- 		},
+-- 		paste = {
+-- 			["+"] = paste,
+-- 			["*"] = paste,
+-- 		},
+-- 	}
+-- end
+vim.opt.clipboard = ""
 
 vim.opt.mouse = ""
 vim.opt.spelllang = {}
