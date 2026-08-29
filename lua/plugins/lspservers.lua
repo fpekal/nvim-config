@@ -53,6 +53,7 @@ return {
 				},
 			},
 			clangd = {
+				mason = false,
 				cmd = {
 					"clangd",
 					"--all-scopes-completion",
