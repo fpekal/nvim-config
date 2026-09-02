@@ -7,6 +7,9 @@ return {
 	},
 	opts = {
 		servers = {
+			pico8_ls = {
+				filetypes = { "pico8" },
+			},
 			nil_ls = {
 				settings = {
 					["nil"] = {

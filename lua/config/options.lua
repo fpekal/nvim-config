@@ -133,3 +133,31 @@ vim.opt.shiftwidth = 2
 vim.opt.smarttab = true
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 0
+
+
+local function in_pico8_project(path)
+	local dir = vim.fn.fnamemodify(path, ":h")
+	while dir ~= "/" do
+		if #vim.fn.glob(dir .. "/*.p8", false, true) > 0 then
+			return true
+		end
+		dir = vim.fn.fnamemodify(dir, ":h")
+	end
+	return false
+end
+
+vim.filetype.add({
+	extension = {
+		pico8 = "pico8",
+		lua = function(path)
+			if in_pico8_project(path) then
+				return "pico8"
+			end
+			return "lua"
+		end,
+	},
+})
+
+vim.treesitter.language.register("lua", "pico8")
+
+vim.lsp.handlers["$/progress"] = function() end
