@@ -74,7 +74,7 @@ return {
 					"--header-insertion=iwyu",
 					"--pch-storage=memory", -- could also be disk
 					"--suggest-missing-includes",
-					"-j=4", -- number of workers
+					"-j=4",            -- number of workers
 					"--log=error",
 					"--query-driver=/**/*",
 				},
