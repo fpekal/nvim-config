@@ -7,6 +7,9 @@ return {
 	},
 	opts = {
 		servers = {
+			pico8_ls = {
+				filetypes = { "pico8" },
+			},
 			nil_ls = {
 				settings = {
 					["nil"] = {
@@ -22,7 +25,7 @@ return {
 				root_markers = { "pack.mcmeta" },
 			},
 			lua_ls = {
-				-- mason = false, -- set to false if you don't want this server to be installed with mason
+				mason = false, -- set to false if you don't want this server to be installed with mason
 				-- Use this to add any additional keymaps
 				-- for specific lsp servers
 				-- ---@type LazyKeysSpec[]
@@ -71,7 +74,7 @@ return {
 					"--header-insertion=iwyu",
 					"--pch-storage=memory", -- could also be disk
 					"--suggest-missing-includes",
-					"-j=4", -- number of workers
+					"-j=4",            -- number of workers
 					"--log=error",
 					"--query-driver=/**/*",
 				},
