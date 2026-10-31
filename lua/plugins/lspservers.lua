@@ -10,6 +10,9 @@ return {
 			pico8_ls = {
 				filetypes = { "pico8" },
 			},
+			tinymist = {
+				mason = false,
+			},
 			nil_ls = {
 				settings = {
 					["nil"] = {
