@@ -1,3 +1,15 @@
+local function getHostname()
+  local f = io.popen ("hostname")
+  local hostname = f:read("*a") or ""
+  f:close()
+  hostname = string.gsub(hostname, "\n$", "")
+  return hostname
+end
+
+local hostname = getHostname()
+local dev_path = (hostname == "everest") and "~/dev/" or "~/data/dev"
+
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -51,6 +63,6 @@ require("lazy").setup({
 		},
 	},
 	dev = {
-		path = "~/dev/",
+		path = dev_path,
 	}
 })
