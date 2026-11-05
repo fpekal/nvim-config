@@ -13,6 +13,9 @@ return {
 			alejandra = {
 				mason = false,
 			},
+			tinymist = {
+				mason = false,
+			},
 			nil_ls = {
 				mason = false,
 				settings = {
