@@ -10,7 +10,11 @@ return {
 			pico8_ls = {
 				filetypes = { "pico8" },
 			},
+			alejandra = {
+				mason = false,
+			},
 			nil_ls = {
+				mason = false,
 				settings = {
 					["nil"] = {
 						formatting = {
@@ -74,7 +78,7 @@ return {
 					"--header-insertion=iwyu",
 					"--pch-storage=memory", -- could also be disk
 					"--suggest-missing-includes",
-					"-j=4",            -- number of workers
+					"-j=4", -- number of workers
 					"--log=error",
 					"--query-driver=/**/*",
 				},
