@@ -1,7 +1,6 @@
 return {
   {
-	"nvim-numeral-infix",
-	dev = true,
+	"fpekal/nvim-numeral-infix",
 	event = "VimEnter",
 	opts = {enable=true, mode='colors'},
   }
